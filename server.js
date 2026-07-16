@@ -1,23 +1,129 @@
-// 1. เรียกใชงาน Module ที่ชื่อวา 'http' ซึ่งเปนระบบพื้นฐานของ Node.js สําหรับทําเซิรฟ เวอร
- const http = require('http');
+// 1. เรียกใช้งาน Module http
+const http = require('http');
 
- // 2. กําหนดชองทาง (Port) ที่เซิรฟเวอรจะใชสื่อสาร โดยใหใชของที่ Cloud กําหนดมา(process.env.PORT) ถาไมมีใหใช 3000
- const port = process.env.PORT || 3000;
+// 2. กำหนด Port
+const port = process.env.PORT || 3000;
 
- // 3. สรางเครื่องแมขาย (Server) ที่คอยรับคําขอ (req) และตอบกลับ (res)
- const server = http.createServer((req, res) => {
+// 3. สร้าง Server
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
 
- // 3.1 ตั้งรหัสสถานะ 200 หมายถึง "ทํางานสําเร็จ (OK)"
- res.statusCode = 200;
+    res.end(`
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Server</title>
 
- // 3.2 บอกเบราวเซอรของผูใชวา สิ่งที่สงกลับไปคือไฟลขอความแบบ HTML และรองรับภาษาไทย (utf-8)
- res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-// 3.3 สงขอมูลหนาเว็บกลับไปหาผูใช (*** ใหนักศึกษาแกชื่อ-นามสกุลตรงนี้ ***)
-res.end('<h1>สวัสดีครับ! นี่คือ Web Server ของ นายอภินันท์ บุญขาว รหัสนักศึกษา 69319010200 </h1><p>เครื่องแม่ข่ายทํางานปกติบนระบบ Railway แล้วครับผม!</p>');
- });
+        body{
+            background: linear-gradient(135deg,#4facfe,#00f2fe);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+        }
 
- // 4. สั่งใหเซิรฟเวอรเริ่มตนเปดรับฟงการเชื่อมตอตาม Port ที่กําหนดไว
- server.listen(port, () => {
- console.log(`Server is running! เครื่องแม่ข่ายเปิดทํางานแล้วที่ช่องทาง: ${port}`);
- });
+        .card{
+            background:#fff;
+            width:500px;
+            max-width:90%;
+            padding:40px;
+            border-radius:20px;
+            text-align:center;
+            box-shadow:0 10px 25px rgba(0,0,0,.2);
+        }
+
+        .icon{
+            font-size:70px;
+            margin-bottom:15px;
+        }
+
+        h1{
+            color:#0077cc;
+            margin-bottom:15px;
+        }
+
+        h2{
+            color:#333;
+            margin-bottom:10px;
+        }
+
+        p{
+            color:#555;
+            line-height:1.8;
+            margin-bottom:10px;
+        }
+
+        .student{
+            background:#f4f8ff;
+            border-left:5px solid #0077cc;
+            padding:15px;
+            border-radius:10px;
+            margin:20px 0;
+        }
+
+        .footer{
+            margin-top:20px;
+            color:#888;
+            font-size:14px;
+        }
+
+        .status{
+            display:inline-block;
+            background:#28a745;
+            color:white;
+            padding:8px 20px;
+            border-radius:30px;
+            margin-top:15px;
+            font-weight:bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon">🚀</div>
+
+    <h1>Node.js Web Server</h1>
+
+    <h2>ยินดีต้อนรับ</h2>
+
+    <div class="student">
+        <p><strong>ชื่อ:</strong> นายอภินันท์ บุญขาว</p>
+        <p><strong>รหัสนักศึกษา:</strong> 69319010200</p>
+    </div>
+
+    <p>เว็บไซต์นี้ทำงานบน <strong>Node.js</strong></p>
+    <p>Deploy สำเร็จบน <strong>Railway</strong></p>
+
+    <div class="status">
+        ✅ Server Online
+    </div>
+
+    <div class="footer">
+        Computer Science | Web Programming
+    </div>
+
+</div>
+
+</body>
+</html>
+`);
+});
+
+// 4. เริ่มทำงาน
+server.listen(port, () => {
+    console.log(`Server is running! เครื่องแม่ข่ายเปิดทำงานแล้วที่ช่องทาง: ${port}`);
+});
